@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <style>
+        .div-header {
+            background: black;
+            color: white;
+        }
+
+        .div-right-header {
+            text-align: right;
+        }
+
+        .div-left-body {
+            padding: 0%;
+        }
+
+        .div-admin-user {
+            padding: 0;
+            margin: 12% 0%;
+        }
+
+        .admin-button {
+            background: #0f6ffd;
+            border-radius: 3px;
+            padding: 3%
+        }
+
+        .admin-button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .user-button {
+            background: white;
+            border-radius: 3px;
+            padding: 3%;
+        }
+
+        .user-button a {
+            color: #0f6ffd;
+            text-decoration: none;
+        }
+
+        .div-right-body {
+            background: #f2f2f2;
+        }
+
+        .admin-panel {
+            margin: 2% 0% 0%;;
+        }
+
+        .nav-panel {
+            padding: 0;
+        }
+
+        .all-users {
+            border: solid 1px #e3e3e3;
+            border-radius: 5px;
+        }
+
+        .table-panel {
+            background: white;
+            border: solid 1px #e3e3e3;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="container-fluid div-header">
+        <div class="row">
+            <div class="col div-left-header">
+                <h3>Admin</h3>
+            </div>
+            <div class="col div-right-header">
+                <h3>Logout</h3>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid vh-100">
+    <div class="row">
+        <div class="col-2 vh-100 div-left-body">
+            <div class="container-fluid div-admin-user">
+                <div class="container-fluid admin-button">
+                    <a href="#">Admin</a>
+                </div>
+                <div class="container-fluid user-button">
+                    <a href="#">User</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-10 vh-100 div-right-body">
+            <div class="container-fluid admin-panel">
+                <h1>Admin panel</h1>
+            </div>
+            <div class="container-fluid nav-panel">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Users table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">New users</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-fluid all-users">
+                <h3>All users</h3>
+            </div>
+
+
+            <div class="container-fluid table-panel">
+                <table class="table table-striped">
+                    <thead class="table-panel-thead">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-panel-tbody">
+                    <tr>
+                        <th class="table-id"></th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button type="button" class="btn btn-primary">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+<script>
+    const tablePanel = document.querySelector(".table-panel-tbody");
+    let output = "";
+    const url = "http://localhost:8080/api/users";
+
+    const allUsers = (users)=> {
+        users.forEach(users => {
+            output +=
+                `<tr>
+                        <th>${users.id}</th>
+                        <td>${users.name}</td>
+                        <td>${users.age}</td>
+                        <td>${users.email}</td>
+                        <td>${users.roles}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>`;
+        })
+        tablePanel.innerHTML = output;
+    }
+    fetch(url)
+        .then(res => res.json())
+        .then(data => allUsers(data))
+
+
+
+</script>
+</body>
+</html>

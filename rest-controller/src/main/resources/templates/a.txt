@@ -1,0 +1,26 @@
+    const tablePanel = document.querySelector(".table-panel-tbody");
+    let output = "";
+    const url = "http://localhost:8080/api/users";
+
+    const allUsers = (users)=> {
+        users.forEach(users => {
+            output +=
+                `<tr>
+                        <th>${users.id}</th>
+                        <td>${users.name}</td>
+                        <td>${users.age}</td>
+                        <td>${users.email}</td>
+                        <td>${users.roles}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>`;
+        })
+        tablePanel.innerHTML = output;
+    }
+    fetch(url)
+        .then(res => res.json())
+        .then(data => allUsers(data))

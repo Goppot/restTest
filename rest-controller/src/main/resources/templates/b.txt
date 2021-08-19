@@ -1,0 +1,13 @@
+const url = "http://localhost:8080/api/users";
+    fetch(url)
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (data) {
+            console.log(data)
+            document.querySelector(".table-id").innerHTML = data[0].roles[0].name;
+
+        })
+        .catch(function (){
+            //catch any errors
+        })
