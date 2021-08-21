@@ -72,6 +72,24 @@
             overflow: auto;
         }
 
+        #popup {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.5);
+            top: 0;
+            left: 0;
+            display: none
+        }
+
+        #body-popup {
+            position: absolute;
+            background: white;
+            max-width: 400px;
+            max-height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
     </style>
 </head>
 <body>
@@ -135,62 +153,63 @@
                     </tr>
                     </thead>
                     <tbody class="table-panel-tbody">
-                    <tr>
-                        <th class="table-id"></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button type="button" class="btn btn-primary">Edit</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
 
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
 </div>
 
+<div class="container-fluid vh-100" id="popup">
+    <h2>Popup</h2>
+    <div id="body-popup">
+        <div id="content-popup">
+            <button id="close-popup" style="float: right">X</button>
+            <div>
+                <h3>Hello popup</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
-<script>
-    const tablePanel = document.querySelector(".table-panel-tbody");
-    let output = "";
-    const url = "http://localhost:8080/api/users";
 
-    const allUsers = (users)=> {
-        users.forEach(users => {
-            output +=
-                `<tr>
-                        <th>${users.id}</th>
-                        <td>${users.name}</td>
-                        <td>${users.age}</td>
-                        <td>${users.email}</td>
-                        <td>${users.roles}</td>
-                        <td>
-                            <button type="button" class="btn btn-primary">Edit</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>`;
+<script type="text/javascript">
+    fetch("http://localhost:8080/api/users").then(
+        res => {
+            res.json().then(
+                data => {
+                    console.log(data);
+                    let temp="";
+                    data.forEach((u)=>{
+                        temp += "<tr>"
+                        temp += "<td>" + u.id + "</td>"
+                        temp += "<td>" + u.name + "</td>"
+                        temp += "<td>" + u.age + "</td>"
+                        temp += "<td>" + u.email + "</td>"
+                        temp += "<td>" + u.nameRole + "</td>"
+                        temp += "<td><button type='button' class='btn btn-primary' id='open-popup1'>Edit</button></td>"
+                        temp += "<td><button type='button' class='btn btn-danger' id='open-popup1'>Delete</button></td>"
+                    })
+                    document.querySelector(".table-panel-tbody").innerHTML = temp;
+                })
         })
-        tablePanel.innerHTML = output;
-    }
-    fetch(url)
-        .then(res => res.json())
-        .then(data => allUsers(data))
+</script>
 
-
-
+<script type="text/javascript">
+    $(document).on("click", "#open-popup1", function (){
+        $("#popup").show();
+    })
+    $(document).ready(function (){
+        $("#close-popup").click(function (){
+            $("#popup").hide();
+        })
+    })
 </script>
 </body>
 </html>

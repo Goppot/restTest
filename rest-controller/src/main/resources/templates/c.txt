@@ -1,0 +1,18 @@
+<script type="text/javascript">
+    const url = "http://localhost:8080/api/users"
+    let text = document.querySelector(".h-content")
+    fetch(url).then(
+        res => {
+            res.json().then(
+                data => {
+                    console.log(data);
+                    let temp="";
+                    data.forEach((u)=>{
+                        temp += "<tr>"
+                        temp += "<td>" + u.name + "</td>"
+                        temp += "<td><button id='open-popup1'>popup open</button></td>"
+                    })
+                    document.querySelector(".h-content").innerHTML = temp;
+                })
+        })
+</script>
